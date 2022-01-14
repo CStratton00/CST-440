@@ -1,0 +1,60 @@
+---
+title: "Week 2 - Tuesday"
+author: "Collin Stratton"
+date: "1/11/2022"
+output: word_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+## Load Libraries
+```{r libs}
+library(lpbrim)
+library(bipartite)
+```
+
+## Data
+The data for this project was gathered from myself and my friends and our favorite movie franchises. Between the 5 franchises chosen, if any of us liked a movie in the franchise, they would get a 1, otherwise they were given a 0.
+```{r data}
+set.seed(100)
+data_matrix <- cbind(c(1, 1, 0, 1, 0), c(0, 0, 0, 1, 1), c(0, 1, 1, 0, 0), c(1, 0, 1, 0, 0), c(0, 0, 1, 1, 0))
+data_matrix <- matrix(data_matrix, 5, 5)
+
+colnames(data_matrix) <- c("Collin", "Michael", "Micah", "Rylin", "Cason")
+rownames(data_matrix) <- c("Star Wars", "Marvel", "Lord of the Rings", "Maze Runner", "DC")
+
+print(data_matrix)
+```
+## Brim
+Make a brim module through 10 iterations
+```{r brim}
+set.seed(101)
+module <- findModules(
+    M = data_matrix,
+    iter = 10,
+    sparse = F
+)
+
+plotMatrixModules(module)
+```
+
+## Plot
+Plot the module graph shown above with frames
+```{r plot1}
+plotMatrixModules(module, mode="frames")
+```
+
+## Plot with more Iterations
+Make a brim module through 50 iterations
+```{r plot2}
+module <- findModules(
+    M = data_matrix,
+    iter = 50,
+    sparse = F
+)
+
+plotMatrixModules(module, mode="frames")
+```
+
+## Conclusion
+The network didn't change much between the different iteration sizes due to the data being sparse. The network is still connected, but the modules are not as large as they could be. Further analysis with more data would yield better results.
