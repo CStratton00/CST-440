@@ -1,0 +1,60 @@
+---
+title: "Week 2 - Thursday"
+author: "Collin Stratton"
+date: "1/13/2022"
+output: word_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+## Load Libraries
+```{r libs}
+library(lpbrim)
+library(bipartite)
+```
+
+## Data
+The data for this project was gathered from myself and my friends and our favorite movie franchises. Between the 5 franchises chosen, if any of us liked a movie in the franchise, they would get a 1, otherwise they were given a 0.
+```{r data}
+set.seed(100)
+data_matrix <- cbind(c(1, 1, 0, 1, 0), c(0, 0, 0, 1, 1), c(0, 1, 1, 0, 0), c(1, 0, 1, 0, 0), c(0, 0, 1, 1, 0))
+data_matrix <- matrix(data_matrix, 5, 5)
+
+colnames(data_matrix) <- c("Collin", "Michael", "Micah", "Rylin", "Cason")
+rownames(data_matrix) <- c("Star Wars", "Marvel", "Lord of the Rings", "Maze Runner", "DC")
+
+print(data_matrix)
+```
+## Brim
+Make a brim module through 10 iterations
+```{r brim}
+set.seed(101)
+module <- findModules(
+    M = data_matrix,
+    iter = 10,
+    sparse = F
+)
+```
+
+## Plot
+Plot the module graph shown above with frames
+```{r plot1}
+plotModules(module)
+```
+
+## Analysis
+Degree\n
+Calculate degrees using column and row sums in R, that is, the number of connections for each vertex
+```{r analysis}
+friendDegrees <- colSums(data_matrix)
+print(friendDegrees)
+franchiseDegrees <- rowSums(data_matrix)
+print(franchiseDegrees)
+```
+
+Max Degree\n
+The max degree is calculated to show the maximum number of connections for a single node in the graph
+```{r max_degree}
+maxDegree <- max(friendDegrees, franchiseDegrees)
+print(maxDegree)
+```
