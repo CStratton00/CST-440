@@ -1,2 +1,2 @@
 # CST-440
-Repository for CST-435 class projects
+Repository for CST-440 class projects
