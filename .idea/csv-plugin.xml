@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/EgocentricNetwork/Github_following.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/Participation/bipartite_data.csv">
           <value>
             <Attribute>
@@ -21,13 +28,6 @@
           <value>
             <Attribute>
               <option name="separator" value="&#9;" />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="$USER_HOME$/Downloads/Github_following.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
