@@ -1,0 +1,2 @@
+# Egocentric Network Project
+CST-440 project to create an ego-centric network with a snowballing effect. This means we will start with a small group of people, then each member brings in a few more, then those bring a few more each, creating a snowballing effect. 
