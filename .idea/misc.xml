@@ -7,6 +7,13 @@
   <component name="RMarkdownSettings">
     <option name="renderProfiles">
       <map>
+        <entry key="file://$PROJECT_DIR$/FriendshipNetworkAnalysis/FriendshipNetworkAnalysis.rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/FriendshipNetworkAnalysis" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/Participation/Class_Activity_1-11-2022.rmd">
           <value>
             <RMarkdownRenderProfile>

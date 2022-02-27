@@ -1,0 +1,40 @@
+---
+title: "Friendship Network Analysis"
+author: "Dharma Tega Bhattu and Collin Stratton"
+date: "2-27-2022"
+output: html_notebook
+---
+
+# Introduction
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Setup
+
+```{r set_libs}
+library(igraph)
+library(GGally)
+library(sna)
+library(ergm)
+```
+
+### netlm
+
+```{r netlm}
+set.seed(123)
+filepath <- "/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/FriendshipNetworkAnalysis/CST-440-RS-FriendshipNetworkMatrix.csv"
+friendmatrix <- read.csv(filepath, header=TRUE, row.names=1, check.names=FALSE, na.strings="")
+
+matrix <- as.matrix(friendmatrix)
+g <- graph.adjacency(matrix, mode="undirected", weighted=TRUE)
+
+plot(g)
+```
+
+```{r}
+cmatrix <- sapply(matrix, as.character)
+attitude <- substr(cmatrix[3], 1, 1)
+degree <- substr(cmatrix[3], 2, 2)
+```
