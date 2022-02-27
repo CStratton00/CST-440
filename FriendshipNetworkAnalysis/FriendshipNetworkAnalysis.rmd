@@ -35,6 +35,48 @@ plot(g)
 
 ```{r}
 cmatrix <- sapply(matrix, as.character)
-attitude <- substr(cmatrix[3], 1, 1)
-degree <- substr(cmatrix[3], 2, 2)
+
+# function to get the first and second character of each node
+relationship <- function(matrix, x, y) {
+  if (matrix[x, y] == "0") {
+    return(c(0, 0))
+  } else {
+    pos <- x * y
+    attitude <- substr(cmatrix[pos], 1, 1)
+    degree <- substr(cmatrix[pos], 2, 2)
+    return(c(as.numeric(attitude), as.numeric(degree)))
+  }
+}
+```
+
+```{r}
+# create two 20x20 matrices
+matrix1 <- matrix(0, nrow=20, ncol=20)
+matrix2 <- matrix(0, nrow=20, ncol=20)
+
+# fill the matrices with the values from the relationship function
+for (i in 1:20) {
+  for (j in 1:20) {
+    matrix1[i, j] <- as.numeric(relationship(matrix, i, j)[1])
+    matrix2[i, j] <- as.numeric(relationship(matrix, i, j)[2])
+  }
+}
+# replace na with 0
+matrix1[is.na(matrix1)] <- 0
+matrix2[is.na(matrix2)] <- 0
+
+matrix1
+matrix2
+```
+
+```{r}
+nl<-netlm(matrix2, matrix1,reps=250)
+nl
+summary(nl)
+```
+
+```{r ergm}
+e <- ergm(matrix1 ~ edges)
+
+print(summary(e))
 ```
