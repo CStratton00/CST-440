@@ -6,13 +6,12 @@ output: word_document
 ---
 
 # Introduction
-
+For this project, we used a dataset that was provided by Professor Artzi. The dataset consists of 20 people to see how they relate to each other and how they feel about each other. The value 0 is used for when a person in connected to themselves. The matrix consists of double-digit numbers, where the first value is either 1 or 2. If the value is 1 then the person likes the person, they are connected to and if the value is 2 then they dislike that person. The second digit of the value represents the intensity of their feeling towards that person. For this project we will be using Exponential random graph model to visualize and analyze the dataset.
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ### Setup
-
 ```{r set_libs}
 library(igraph)
 library(GGally)
@@ -20,8 +19,7 @@ library(sna)
 library(ergm)
 ```
 
-### netlm
-
+## Graph Connections
 ```{r netlm}
 set.seed(123)
 filepath <- "/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/FriendshipNetworkAnalysis/CST-440-RS-FriendshipNetworkMatrix.csv"
@@ -33,7 +31,10 @@ g <- graph.adjacency(matrix, mode="undirected", weighted=TRUE)
 plot(g)
 ```
 
+## Function to Separate Information
+The data comes as double digits but the first and last values represent different information. Thus, we need to separate the information from the matrix.
 ```{r}
+# convert the matrix into a character list
 cmatrix <- sapply(matrix, as.character)
 
 # function to get the first and second character of each node
@@ -49,6 +50,8 @@ relationship <- function(matrix, x, y) {
 }
 ```
 
+## Matrix Creation
+Using the relationship function, we can create a matrix of the attitude of each person and the degree of their attitude.
 ```{r}
 # create two 20x20 matrices
 matrix1 <- matrix(0, nrow=20, ncol=20)
@@ -69,14 +72,22 @@ matrix1
 matrix2
 ```
 
+## Network Data Linear Regression
+Using the netlm function, the attitude and degree and regressed using the least ordinary squares. The resulting fits are then tested against the indicated null hypothesis.
 ```{r}
 nl<-netlm(matrix2, matrix1,reps=250)
 nl
 summary(nl)
 ```
+Note the general result and that the degree of the attitude is not significant.
 
+## ERGM
+ERGM is a method for generating random graphs. The method is based on the idea that the probability of a node being connected to another node is proportional to the degree of the node. Find below the analysis of the ERGM model.
 ```{r ergm}
 e <- ergm(matrix1 ~ edges)
 
-print(summary(e))
+summary(e)
 ```
+
+# Conclusion
+From the Netlm function shown above, a general analysis of the degree and attitude of the people is shown. The Netlm function regressed the two datasets using the ordinary least squares. From this operation the resulting fits are found giving an insignificant model. The ERGM model is then calculated where a more significant model is found. ERGMs are a method that finds the probability of a node being connected to another node is proportional to the degree of the node. From the output shown above, the ERGM found an AIC score of 79.6 and a BIC score of 83.54, with a significant z score of 10.74. This is all to say that there is a significant relationship between the degree and attitude of the people.
