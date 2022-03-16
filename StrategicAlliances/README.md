@@ -1,0 +1,2 @@
+# Strategic Alliances Project
+CST-440 project to analyze several networks which depict various types of inter-organization relationships among a large set of companies. The objective is to detect potential for alliances, the impact of interlocking boards, and attempt to identify strategic opportunities and challenges.
