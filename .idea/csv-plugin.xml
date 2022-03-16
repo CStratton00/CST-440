@@ -17,6 +17,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/FriendshipNetworkAnalysis/CST-440-RS-FriendshipNetworkMatrix.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/Participation/bipartite_data.csv">
           <value>
             <Attribute>
