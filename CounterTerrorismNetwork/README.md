@@ -1,0 +1,2 @@
+# Counter-Terrorism Network Project
+ CST-440 project to research about terrorists, find a terrorist and counter-terrorist network, then use SNA principles to propose a solution for the CTN to defeat the TN. 
