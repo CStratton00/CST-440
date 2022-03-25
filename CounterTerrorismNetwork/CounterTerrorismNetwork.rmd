@@ -1,0 +1,108 @@
+---
+title: "Counter-Terrorism Network"
+author: "Dharma Tega Bhattu and Collin Stratton"
+date: "4-2-2022"
+output: word_document
+---
+
+# Introduction
+```{r import}
+library(ggnetwork)
+library(ggplot2)
+library(network)
+library(GGally)
+library(igraph)
+library(sna)
+```
+```{r read data}
+phase1 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase1.csv", header=TRUE, row.names=1)
+phase2 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase2.csv", header=TRUE, row.names=1)
+phase3 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase3.csv", header=TRUE, row.names=1)
+phase4 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase4.csv", header=TRUE, row.names=1)
+phase5 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase5.csv", header=TRUE, row.names=1)
+phase6 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase6.csv", header=TRUE, row.names=1)
+phase7 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase7.csv", header=TRUE, row.names=1)
+phase8 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase8.csv", header=TRUE, row.names=1)
+phase9 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase9.csv", header=TRUE, row.names=1)
+phase10 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase10.csv", header=TRUE, row.names=1)
+phase11 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase11.csv", header=TRUE, row.names=1)
+```
+```{r matrix testing}
+matrix1 <- as.matrix(phase11)
+network1 <- as.network(matrix1)
+
+ggnet2(network1, label=TRUE, label.size = 2)
+```
+```{r}
+Initial.matrix <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase1.csv", header=TRUE, row.names=1, check.names=FALSE, na.strings = "")
+matrix <- as.matrix(Initial.matrix)
+g <- graph.adjacency(matrix, mode="undirected", weighted=NULL)
+plot(g, vertex.size=1, vertex.label=NA)
+```
+```{r}
+#clusters/community
+# greedy method (hiearchical, fast method)
+g <- simplify(g)
+c1 <- cluster_fast_greedy(g)
+# modularity measure
+modularity(c1)
+```
+```{r}
+# modularity matrix
+B <- modularity_matrix(g, membership(c1))
+```
+```{r}
+round(B[1,],2)
+```
+```{r}
+# memberships of nodes
+membership(c1)
+```
+```{r}
+# number of communities
+length(c1)
+```
+```{r}
+# size of communities
+sizes(c1)
+```
+```{r}
+# crossing edges
+crossing(c1, g)
+```
+```{r}
+# plot communities with shaded regions
+plot(c1, g, vertex.size=1)
+```
+```{r}
+plot(c1, g, vertex.size=1, vertex.label=NA)
+```
+```{r}
+#centrality
+edge_density(g, loops=TRUE)
+```
+```{r}
+cdegree <- centr_degree(g, mode="total", normalized=T)
+cclo <- centr_clo(g, mode = "total", normalized=T)
+
+cbetw <- centr_betw(g, directed = TRUE)
+cdegree
+```
+```{r}
+max(cdegree$res)
+```
+```{r}
+which.max(cdegree$res)
+```
+```{r}
+cclo
+```
+```{r}
+max(cbetw$res)
+```
+```{r}
+which.max(cbetw$res)
+```
+```{r}
+max_cliques(g, min = 3)
+```
