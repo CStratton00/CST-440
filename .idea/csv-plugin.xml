@@ -10,6 +10,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/CounterTerrorismNetwork/CAVIAR/phase11.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/CounterTerrorismNetwork/CAVIAR/phase11CTN.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/EgocentricNetwork/Github_following.csv">
           <value>
             <Attribute>
