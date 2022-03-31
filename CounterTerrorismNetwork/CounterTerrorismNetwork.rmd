@@ -6,6 +6,29 @@ output: word_document
 ---
 
 # Introduction
+This assignment aims to explore criminal and terrorist networks using social network analysis and explore the different methods of destabilizing their networks. First, an analysis of various journal articles about the topic will be summarized to understand the topic as a whole further. SNA will be used to understand the criminal activity in the CAVIAR dataset. The CAVIAR dataset is a database of a growing criminal network in Canada that was tracked through wiretapping.
+
+# Criminal Network Resource Analysis
+## Agent Based Modeling on Organizational Dynamics of Terrorist Network
+The article is about how network analysis can be used to investigate a terrorist organization and how it is structured, and how it is expected to grow. Initial analysis was done using social network analysis, which provided great information about the structure of the organization and essential information such as individuals and subgroups. This method only allowed for analyzing the base structure. However, advanced methods such as Dynamic network analysis and metanetwork can help analyze the operations of a terrorist network and how the organization is expected to grow, and through which individuals.
+
+## Hitting Them Where It Hurts
+In the article Hitting Them Where It Hurts the author focuses on terrorist activity centered around West Africa. Daniel Detzi talks about different terrorist groups in West Africa, such as Al-Qaeda, and how they use illicit trafficking networks for financial funding. The article then talks about different methods used by the United States and other countries to disrupt the funding for terrorist organizations in this region. Some used methods are SOUTHCOM, EUCOM, JIATF-S, and counter-terrorist financing (CTF). Even with the robust methods to counteract terrorism, AQIM and other terrorist organizations find a way to have solid financial security to continue their activities.
+
+## Advancing the Understanding of Sociospatial Dependencies in Terrorist Networks
+The article is about sociospatial networks, which are used to understand how the geography of a region helps a terrorist organization. It can be used to determine the dependencies of a clan, cultural identity, and ideology that are associated with the geography of where a terrorist organization is located. The advancement of sociospatial networks is done through mathematical network analyses, social network analysis, and Geographic information science.
+
+## Detecting Criminal Organizations in Mobile Phone Networks
+The detecting criminal organizations in mobile phone networks journal article was an interesting study on the use of mobile phone networks and online social media to analyze criminal activities. Criminal organizations are established based on the collaboration of criminals who usually form groups with different roles. The analysis of a criminal network is thus aimed at uncovering the structural schemes of the organization, its operations, and the flow of communication among its members. The article discussed various methods of obtaining the data, specifically using wiretapping over 15 days on people allegedly belonging to a criminal association as a key example. They then performed various analyses based on the information gained from the wiretapping and could detect the formations of groups and who had the most connections within those groups. It is then on the police force to determine the best way to disrupt these criminal groups. The article concluded that the study of information flow allows identifying key individuals inside criminal organizations. The analysis of phone call networks is crucial to gaining information about interconnectivity and communication among criminals.
+
+## Decision Support for Countering Terrorist Threats against Transportation Networks
+The decision support for countering terrorist threats against transportation networks journal article presents a dynamic decision support methodology for counter-terrorism decision support. It analyses risk management on a country and worldwide scale, the use of TRANSEC, and the application of TRANSEC for homeland security, critical infrastructure, and border protection. TRANSEC is a strategy tool that aims to identify and manage robust counter-terrorism strategies through “what-if” simulations to model risk landscapes. It focuses on terrorism threats relating to transportation systems, but it has the capabilities of helping out in other areas such as those listed before. The article goes into detail about all of its advanced capabilities and demonstrates its analytical skills through graphs. The article concludes by explaining the difficulty of managing risk from terrorism and that TRANSEC is a step in the right direction for reducing the amount of terrorism in the world.
+
+# Terrorist Network Analysis
+The dataset used to perform social network analysis on a criminal organization is the CAVIAR investigation dataset from Kaggle. The CAVIAR investigation lasted two years and ran from 1994 to 1996. During these two years, 11 wiretap warrants were obtained to gain information about the terrorist network. The dataset contains a set of TNs, which are the growth of the criminal organization over time. To use a dataset with no distinct leaders, the latest TN was used. The following is the code outline below: bipartite visualization of the TN, clustering of the TN for modulation and membership analysis, plot of the communities with shaded regions, and statistical analysis of the TN.
+
+## Setup
+
 ```{r import}
 library(ggnetwork)
 library(ggplot2)
@@ -14,95 +37,122 @@ library(GGally)
 library(igraph)
 library(sna)
 ```
+
 ```{r read data}
-phase1 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase1.csv", header=TRUE, row.names=1)
-phase2 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase2.csv", header=TRUE, row.names=1)
-phase3 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase3.csv", header=TRUE, row.names=1)
-phase4 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase4.csv", header=TRUE, row.names=1)
-phase5 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase5.csv", header=TRUE, row.names=1)
-phase6 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase6.csv", header=TRUE, row.names=1)
-phase7 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase7.csv", header=TRUE, row.names=1)
-phase8 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase8.csv", header=TRUE, row.names=1)
-phase9 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase9.csv", header=TRUE, row.names=1)
-phase10 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase10.csv", header=TRUE, row.names=1)
 phase11 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase11.csv", header=TRUE, row.names=1)
 ```
-```{r matrix testing}
+
+## Bipartite Visualization
+```{r bipartite visualization}
 matrix1 <- as.matrix(phase11)
 network1 <- as.network(matrix1)
 
 ggnet2(network1, label=TRUE, label.size = 2)
 ```
-```{r}
-Initial.matrix <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase1.csv", header=TRUE, row.names=1, check.names=FALSE, na.strings = "")
+
+```{r undirected bipartite visualization}
+Initial.matrix <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase11.csv", header=TRUE, row.names=1, check.names=FALSE, na.strings = "")
 matrix <- as.matrix(Initial.matrix)
 g <- graph.adjacency(matrix, mode="undirected", weighted=NULL)
 plot(g, vertex.size=1, vertex.label=NA)
 ```
-```{r}
-#clusters/community
+
+## Clustering and Modulation Analysis
+
+```{r clustering}
 # greedy method (hiearchical, fast method)
 g <- simplify(g)
 c1 <- cluster_fast_greedy(g)
-# modularity measure
+
 modularity(c1)
 ```
-```{r}
-# modularity matrix
+
+```{r modularity}
 B <- modularity_matrix(g, membership(c1))
-```
-```{r}
 round(B[1,],2)
 ```
-```{r}
-# memberships of nodes
+
+```{r membership}
 membership(c1)
 ```
-```{r}
-# number of communities
+
+## Plotting Communities
+
+```{r communities}
 length(c1)
 ```
-```{r}
-# size of communities
+
+```{r community sizes}
 sizes(c1)
 ```
-```{r}
-# crossing edges
+
+```{r community colors}
 crossing(c1, g)
 ```
-```{r}
+
+```{r community graph}
 # plot communities with shaded regions
 plot(c1, g, vertex.size=1)
 ```
-```{r}
-plot(c1, g, vertex.size=1, vertex.label=NA)
-```
-```{r}
-#centrality
+
+## Statistical Analysis
+
+```{r centrality}
 edge_density(g, loops=TRUE)
 ```
-```{r}
+```{r degree}
 cdegree <- centr_degree(g, mode="total", normalized=T)
 cclo <- centr_clo(g, mode = "total", normalized=T)
 
 cbetw <- centr_betw(g, directed = TRUE)
 cdegree
 ```
-```{r}
+
+```{r max degree}
 max(cdegree$res)
-```
-```{r}
 which.max(cdegree$res)
 ```
-```{r}
+
+```{r clustering coefficient}
 cclo
 ```
 ```{r}
 max(cbetw$res)
-```
-```{r}
 which.max(cbetw$res)
 ```
-```{r}
+
+```{r cliques}
 max_cliques(g, min = 3)
 ```
+
+# Counter-Terrorist Network Analysis
+The above network analysis was performed to arrest and destabilize a criminal organization and seize millions of dollars worth of drugs in the process. During the time of the investigation, about 32 million dollars worth of drugs was obtained before arresting any of the perpetrators for the purpose of removing as many drugs from the market as possible. Their counter-terrorism network was not provided, but below is our assumption of what their CTN looked like.
+
+## CTN Bipartite Visualization
+
+```{r read new data}
+phase11 <- read.csv("/Users/collinstratton/Google Drive/School/GCU/Fall 2021 - Spring 2022/CST-440/CST-440/CounterTerrorismNetwork/CAVIAR/phase11CTN.csv", header=TRUE, row.names=1)
+```
+
+```{r CTN bipartite visualization}
+matrix1 <- as.matrix(phase11)
+network1 <- as.network(matrix1)
+
+ggnet2(network1, label=TRUE, label.size = 2)
+```
+
+In the graph above, you can see the addition of 3 agents in the 500s that have integrated themselves into the group. They operate together but in different parts of the network as a whole. Agent 500 integrated themselves into criminal 12's activities, which is a cocaine import organization, according to the data. By integrating themselves here, agent 500 would be able to destabilize the cocaine imports, seize kilograms of cocaine, and learn of other groups in the organization. Agent 501 became integrated with the communication between criminals 1 and 41, two criminal organizations working together to sell drugs. By integrating themselves here, agent 501 would be able to track the movement of drugs, learn about other criminal activities in the organization, and further expand the criminal network data. Finally, Agent 502 integrated themselves into the transportation nodes of the criminal network. Criminal 79 has connections at an airport that is used to be able to transport drugs across the world. By integrating themselves into this communication, agent 502 can better track the movement of drugs and prepare the police for seizes.
+
+# Conclusion
+The amount of time and effort it takes to track and strategize how to destabilize criminal networks is enormous. Extra caution must be taken so that the law is followed and contacts in these organizations do not get burned. The terrorist network above took much extra care since none of the terrorists were arrested until after their drug supply was seized over time. Through careful planning, diligent studying, and patience, any criminal organization can be tracked and destabilized using social network analysis.
+
+# References
+Adler, R., & Fuller, J. (2009). Decision Support for Countering Terrorist Threats against Transportation Networks. Journal of Strategic Security, 2(3). https://doi.org/10.5038/1944-0472.2.3.5
+
+Detzi, D., & Winkleman, S. (2016). Hitting Them Where it Hurts: A Joint Interagency Network to Disrupt Terrorist Financing in West Africa. STUDIES IN CONFLICT & TERRORISM, 39(3), 227–239. https://doi-org.lopes.idm.oclc.org/10.1080/1057610X.2015.1099994
+
+Ferrara, E., de Meo, P., Catanese, S., & Fiumara, G. (2014). Detecting criminal organizations in mobile phone networks. Expert Systems with Applications, 41(13), 5733–5750. https://doi.org/10.1016/j.eswa.2014.03.024
+
+Li, B., Sun, D., Zhu, R., & Li, Z. (2015). Agent Based Modeling on Organizational Dynamics of Terrorist Network. Discrete Dynamics in Nature & Society, 1–17. https://doi-org.lopes.idm.oclc.org/10.1155/2015/237809
+
+Medina, R. M., & Hepner, G. F. (2011). Advancing the Understanding of Sociospatial Dependencies in Terrorist Networks. Transactions in GIS, 15(5), 577–597. https://doi-org.lopes.idm.oclc.org/10.1111/j.1467-9671.2011.001281.x
