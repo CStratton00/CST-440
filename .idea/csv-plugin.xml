@@ -31,6 +31,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/EmotionalPersonalHealth /ObesityDataSet.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/EmotionalPersonalHealth /ObesityDataSet_raw_and_data_sinthetic.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/FriendshipNetworkAnalysis/CST-440-RS-FriendshipNetworkMatrix.csv">
           <value>
             <Attribute>
