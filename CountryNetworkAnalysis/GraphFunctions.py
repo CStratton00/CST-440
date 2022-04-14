@@ -6,10 +6,10 @@ def createGraph(edges, size):
     G = nx.Graph()
 
     # create a plot
-    plt.figure(figsize=(5,5))
+    plt.figure(figsize=(5, 5))
 
     # add the nodes to the graph
-    G.add_weighted_edges_from((edges, size))
+    G.add_edges_from(edges)
 
     # draw the graph
     nx.draw(G, with_labels=True, node_size=size)
